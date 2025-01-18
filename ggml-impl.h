@@ -223,10 +223,6 @@ static inline ggml_fp16_t ggml_compute_fp32_to_fp16(float f) {
 
 #endif // __ARM_NEON
 
-#ifdef __ARM_FEATURE_SVE
-#include <arm_sve.h>
-#endif // __ARM_FEATURE_SVE
-
 // precomputed f32 table for f16 (256 KB)
 // defined in ggml.c, initialized in ggml_init()
 extern float ggml_table_f32_f16[1 << 16];

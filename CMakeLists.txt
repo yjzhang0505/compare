@@ -967,7 +967,6 @@ if (CMAKE_OSX_ARCHITECTURES STREQUAL "arm64" OR CMAKE_GENERATOR_PLATFORM_LWR STR
         add_compile_definitions(__aarch64__) # MSVC defines _M_ARM64 instead
         add_compile_definitions(__ARM_NEON)
         add_compile_definitions(__ARM_FEATURE_FMA)
-        add_compile_definitions(__ARM_FEATURE_SVE)
 
         set(CMAKE_REQUIRED_FLAGS_PREV ${CMAKE_REQUIRED_FLAGS})
         string(JOIN " " CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS} "/arch:armv8.2")
@@ -982,10 +981,6 @@ if (CMAKE_OSX_ARCHITECTURES STREQUAL "arm64" OR CMAKE_GENERATOR_PLATFORM_LWR STR
         set(CMAKE_REQUIRED_FLAGS ${CMAKE_REQUIRED_FLAGS_PREV})
     else()
         check_cxx_compiler_flag(-mfp16-format=ieee COMPILER_SUPPORTS_FP16_FORMAT_I3E)
-        #list(APPEND ARCH_FLAGS -march=armv8.6-a+sve+sve2)
-        #add_compile_options(-ffast-math)
-        #list(APPEND ARCH_FLAGS -march=native)
-        add_compile_options(-O3 -march=armv8.6-a+sve+sve2 -ftree-vectorize -ffast-math)
         if (NOT "${COMPILER_SUPPORTS_FP16_FORMAT_I3E}" STREQUAL "")
             list(APPEND ARCH_FLAGS -mfp16-format=ieee)
         endif()

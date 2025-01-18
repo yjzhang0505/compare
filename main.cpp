@@ -183,7 +183,6 @@ int main(int argc, char ** argv) {
     if (params.random_prompt) {
         params.prompt = gpt_random_prompt(rng);
     }
-    // std::cout << params.prompt << std::endl;
 
     LOG("%s: llama backend init\n", __func__);
     llama_backend_init();
@@ -282,7 +281,6 @@ int main(int argc, char ** argv) {
         LOG("guidance_inp tokenized: %s\n", LOG_TOKENS_TOSTR_PRETTY(ctx_guidance, guidance_inp).c_str());
 
         std::vector<llama_token> original_inp = ::llama_tokenize(ctx, params.prompt, add_bos, true);
-        // std::cout << original_inp.size() << std::endl;
         LOG("original_inp tokenized: %s\n", LOG_TOKENS_TOSTR_PRETTY(ctx, original_inp).c_str());
 
         original_prompt_len = original_inp.size();
@@ -369,8 +367,7 @@ int main(int argc, char ** argv) {
     if (params.interactive_first) {
         params.interactive = true;
     }
-    // LOG_TEE("%s: prompt: '%s'\n", __func__, params.prompt.c_str());
-    // LOG_TEE("%s: number of tokens in prompt = %zu\n", __func__, embd_inp.size());
+
     if (params.verbose_prompt) {
         LOG_TEE("\n");
         LOG_TEE("%s: prompt: '%s'\n", __func__, params.prompt.c_str());
@@ -456,7 +453,7 @@ int main(int argc, char ** argv) {
     LOG_TEE("sampling: \n%s\n", llama_sampling_print(sparams).c_str());
     LOG_TEE("sampling order: \n%s\n", llama_sampling_order_print(sparams).c_str());
     LOG_TEE("generate: n_ctx = %d, n_batch = %d, n_predict = %d, n_keep = %d\n", n_ctx, params.n_batch, params.n_predict, params.n_keep);
-    LOG_TEE("<\n");
+
     // group-attention state
     // number of grouped KV tokens so far (used only if params.grp_attn_n > 1)
     int ga_i = 0;
@@ -518,7 +515,6 @@ int main(int argc, char ** argv) {
     std::vector<std::vector<llama_token>> antiprompt_ids;
 
     antiprompt_ids.reserve(params.antiprompt.size());
-    
     for (const std::string & antiprompt : params.antiprompt) {
         antiprompt_ids.emplace_back(::llama_tokenize(ctx, antiprompt, false, true));
     }
@@ -941,9 +937,8 @@ int main(int argc, char ** argv) {
         LOG_TEE("\n%s: saving final output to session file '%s'\n", __func__, path_session.c_str());
         llama_save_session_file(ctx, path_session.c_str(), session_tokens.data(), session_tokens.size());
     }
-    
+
     llama_print_timings(ctx);
-    std::cout << "\nToken number: " <<  embd_inp.size() << ">" << std::endl;
     write_logfile(ctx, params, model, input_tokens, output_ss.str(), output_tokens);
 
     if (ctx_guidance) { llama_free(ctx_guidance); }

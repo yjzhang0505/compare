@@ -127,25 +127,6 @@ void iq2xs_free_impl(enum ggml_type type);
 void iq3xs_init_impl(int grid_size);
 void iq3xs_free_impl(int grid_size);
 
-block_q4_0x4 make_block_q4_0x4(const block_q4_0 * const in[4], unsigned int block_len);
-block_q4_0x8 make_block_q4_0x8(const block_q4_0 * const in[8], unsigned int block_len);
-block_q8_0x4 make_block_q8_0x4(const block_q8_0 * const in[4], unsigned int block_len);
-block_q8_0x8 make_block_q8_0x8(const block_q8_0 * const in[8], unsigned int block_len);
-void quantize_row_q8_0_and_make_block_q8_0x2(const float * restrict x, void * restrict vy, int k, int rows_interleaved);
-void quantize_row_q8_0_and_make_block_q8_0x4(const float * restrict x, void * restrict vy, int k, int rows_interleaved);
-
-// GEMV
-void ggml_gemv_q4_0_q8_0_blocked8_neon(const int n, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-void ggml_gemv_q4_0_q8_0_blocked8_sve(const int n, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-void ggml_gemv_q8_0_q8_0_blocked8_neon(const int n, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-void ggml_gemv_q8_0_q8_0_blocked8_sve(const int n, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-
-// GEMM
-void ggml_gemm_q4_0_q8_0(const int n, int rows, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-void ggml_gemm_q4_0_q8_0_2x4blocked_mmla(const int n, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-void ggml_gemm_q8_0_q8_0(const int n, int rows, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-void ggml_gemm_q8_0_q8_0_2x4blocked_mmla(const int n, int output_channels, int input_width, float * restrict s, const void * restrict vx, const void * restrict vy, int ith, int nth);
-
 #ifdef __cplusplus
 }
 #endif

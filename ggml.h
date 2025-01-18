@@ -591,12 +591,7 @@ extern "C" {
 
         void * extra; // extra things e.g. for ggml-cuda.cu
 
-        // char padding[8];
-        char padding[9];
-
-        void * rearranged_weight_gemv;
-        void * rearranged_weight_gemm;
-        bool weight_rearranged;
+        char padding[8];
     };
 
     static const size_t GGML_TENSOR_SIZE = sizeof(struct ggml_tensor);
@@ -2355,7 +2350,6 @@ extern "C" {
     GGML_API int ggml_cpu_has_avx512_vnni(void);
     GGML_API int ggml_cpu_has_fma        (void);
     GGML_API int ggml_cpu_has_neon       (void);
-    GGML_API int ggml_cpu_has_sve       (void);
     GGML_API int ggml_cpu_has_arm_fma    (void);
     GGML_API int ggml_cpu_has_metal      (void);
     GGML_API int ggml_cpu_has_f16c       (void);
@@ -2402,15 +2396,6 @@ extern "C" {
     } ggml_type_traits_t;
 
     GGML_API ggml_type_traits_t ggml_internal_get_type_traits(enum ggml_type type);
-
-    GGML_API void rearrange_q4_0_weights_blocked8_neon(struct ggml_tensor * cur);
-    GGML_API void rearrange_q4_0_weights_blocked8_sve(struct ggml_tensor * cur);
-    GGML_API void rearrange_q4_0_weights_for_gemv(struct ggml_tensor * cur);
-    GGML_API void rearrange_q4_0_weights_for_gemm(struct ggml_tensor * cur);
-    GGML_API void rearrange_q8_0_weights_blocked8_neon(struct ggml_tensor * cur);
-    GGML_API void rearrange_q8_0_weights_blocked8_sve(struct ggml_tensor * cur);
-    GGML_API void rearrange_q8_0_weights_for_gemv(struct ggml_tensor * cur);
-    GGML_API void rearrange_q8_0_weights_for_gemm(struct ggml_tensor * cur);
 
 #ifdef  __cplusplus
 }
